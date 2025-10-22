@@ -1,5 +1,6 @@
 import tkinter as tk
 import math
+from tkinter import PhotoImage  # ← agregado para cargar imágenes
 
 #---------------- FUNCIONES DE PERÍMETRO ----------------#
 
@@ -195,30 +196,21 @@ def ventana_perimetro():
     v.configure(background="#ffffee")
     v.geometry("500x350+450+150")
     v.title("Perímetro")
+
     tk.Label(v, text="Perímetros", bg="#ffffee", font=("Courier", 24, "bold"), foreground="#3B3636").place(x=50, y=35, anchor='nw')
+
+    # 🔹 Imagen general solo dentro de la ventana de perímetro
+    try:
+        img_perimetro = tk.PhotoImage(file="img/perimetrogeneral.png").subsample(4, 6)
+        tk.Label(v, image=img_perimetro, bg="#ffffee").place(x=100, y=100)
+        v.img_perimetro = img_perimetro  # mantener referencia para que no se borre
+    except Exception as e:
+        print("⚠️ No se pudo cargar la imagen del perímetro:", e)
+
+    # 🔹 Botones
     tk.Button(v, text="Cuadrado", font=("Verdana", 11), background="#ffffcc", command=perimetro_cuadrado).place(x=430, y=110, anchor="ne")
     tk.Button(v, text="Círculo", font=("Verdana", 11), background="#ffffcc", command=perimetro_circulo).place(x=418, y=190, anchor="ne")
     tk.Button(v, text="Triángulo Equilátero", font=("Verdana", 11), background="#ffffcc", command=perimetro_triangulo).place(x=465, y=270, anchor="ne")
-
-def ventana_area():
-    v = tk.Toplevel(aplicacion)
-    v.configure(background="#ffffee")
-    v.geometry("500x350+450+150")
-    v.title("Área")
-    tk.Label(v, text="Áreas", bg="#ffffee", font=("Courier", 24, "bold"), foreground="#3B3636").place(x=50, y=35, anchor='nw')
-    tk.Button(v, text="Cuadrado", font=("Verdana", 11), background="#ffffcc", command=area_cuadrado).place(x=430, y=110, anchor="ne")
-    tk.Button(v, text="Triángulo", font=("Verdana", 11), background="#ffffcc", command=area_triangulo).place(x=428, y=190, anchor="ne")
-    tk.Button(v, text="Círculo", font=("Verdana", 11), background="#ffffcc", command=area_circulo).place(x=418, y=270, anchor="ne")
-
-def ventana_volumen():
-    v = tk.Toplevel(aplicacion)
-    v.configure(background="#ffffee")
-    v.geometry("500x350+450+150")
-    v.title("Volumen")
-    tk.Label(v, text="Volúmenes", bg="#ffffee", font=("Courier", 24, "bold"), foreground="#3B3636").place(x=50, y=35, anchor='nw')
-    tk.Button(v, text="Cubo", font=("Verdana", 11), background="#ffffcc", command=volumen_cubo).place(x=400, y=110, anchor="ne")
-    tk.Button(v, text="Esfera", font=("Verdana", 11), background="#ffffcc", command=volumen_esfera).place(x=405, y=190, anchor="ne")
-    tk.Button(v, text="Cilindro", font=("Verdana", 11), background="#ffffcc", command=volumen_cilindro).place(x=410, y=270, anchor="ne")
 
 #---------------- APLICACIÓN PRINCIPAL ----------------#
 
@@ -228,8 +220,16 @@ aplicacion.configure(background="#ffffee")
 aplicacion.title("Perímetro, área y volumen")
 
 tk.Label(aplicacion, text="Calculadora", bg="#ffffee", font=("Courier", 24, "bold"), foreground="#3B3636").place(x=50, y=35, anchor='nw')
+
+# 🔹 Aquí se carga y muestra la imagen general del perímetro
+try:
+    img_perimetro = PhotoImage(file="img/perimetro.png").subsample(2, 2)
+    tk.Label(aplicacion, image=img_perimetro, bg="#ffffee").place(x=30, y=80)
+except Exception as e:
+    print("⚠️ No se pudo cargar la imagen del perímetro:", e)
+
 tk.Button(aplicacion, text="Perímetro", font=("Verdana", 11), background="#ffffcc", command=ventana_perimetro).place(x=430, y=110, anchor="ne")
-tk.Button(aplicacion, text="Volumen", font=("Verdana", 11), background="#ffffcc", command=ventana_volumen).place(x=425, y=190, anchor="ne")
-tk.Button(aplicacion, text="Área", font=("Verdana", 11), background="#ffffcc", command=ventana_area).place(x=410, y=270, anchor="ne")
+tk.Button(aplicacion, text="Volumen", font=("Verdana", 11), background="#ffffcc", command=volumen_cubo).place(x=425, y=190, anchor="ne")
+tk.Button(aplicacion, text="Área", font=("Verdana", 11), background="#ffffcc", command=area_cuadrado).place(x=410, y=270, anchor="ne")
 
 aplicacion.mainloop()
