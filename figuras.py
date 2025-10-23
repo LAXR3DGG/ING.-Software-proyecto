@@ -78,7 +78,7 @@ def area_cuadrado():
     label_resultado.pack(pady=10)
 
     # Imagen del cuadrado debajo
-    path_img = os.path.join(os.path.dirname(_file_), "cuadrado.png")
+    path_img = os.path.join(os.path.dirname(_file_), "img/cuadrado.png")
     if os.path.exists(path_img):
         img = Image.open(path_img).resize((80, 80))
         imagen_cuadrado = ImageTk.PhotoImage(img)
