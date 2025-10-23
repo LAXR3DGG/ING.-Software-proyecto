@@ -1,5 +1,9 @@
 import tkinter as tk
 import math
+import os
+
+# Ruta base del proyecto (para localizar la imagen)
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 #---------------- FUNCIONES DE PERÍMETRO ----------------#
 
@@ -109,20 +113,60 @@ def ca_triangulo():
 def area_triangulo():
     triangulo = tk.Toplevel(aplicacion)
     triangulo.configure(background="#ffffee")
-    triangulo.geometry("300x265+450+150")
+    triangulo.geometry("330x400+450+150")
     triangulo.title("Área Triángulo")
-    tk.Label(triangulo, text="Ingrese la base del triángulo:", bg="#ffffee", font=("Courier", 10), foreground="#3B3636").pack(pady=10)
+
+    # ===== Apartado superior con imagen =====
+    header = tk.Frame(triangulo, bg="#ffffee")
+    header.pack(pady=(8, 6))
+
+    canvas = tk.Canvas(header, width=160, height=130, bg="#ffffee", highlightthickness=0)
+    canvas.pack()
+
+    # Intentar cargar PNG (Tk 8.6+) y escalar si está muy grande usando subsample
+    img_obj = None
+    try:
+        path = os.path.join(BASE_DIR, "img", "triangle.png")
+        if os.path.exists(path):
+            tmp = tk.PhotoImage(file=path)
+            # Escala si excede el espacio del canvas
+            iw, ih = tmp.width(), tmp.height()
+            maxw, maxh = 160, 130
+            fx = max(1, int(math.ceil(iw / maxw)))
+            fy = max(1, int(math.ceil(ih / maxh)))
+            if fx > 1 or fy > 1:
+                tmp = tmp.subsample(fx, fy)
+            img_obj = tmp
+            triangulo._img_tri = img_obj  # evitar GC
+            canvas.create_image(maxw//2, maxh//2, image=img_obj)
+        else:
+            raise FileNotFoundError(f"No existe la ruta: {path}")
+    except Exception:
+        # Respaldo: dibujar triángulo vectorial si no se pudo cargar la imagen
+        cw, ch = 160, 130
+        pad = 12
+        canvas.create_polygon(pad, ch - pad, cw - pad, ch - pad, cw//2, pad,
+                              fill="", outline="#3B3636", width=2)
+
+    # ===== Resto de la UI (intacta) =====
+    tk.Label(triangulo, text="Ingrese la base del triángulo:",
+             bg="#ffffee", font=("Courier", 10), foreground="#3B3636").pack(pady=6)
     global entrada_baseat
     entrada_baseat = tk.Entry(triangulo)
-    entrada_baseat.pack(pady=10)
-    tk.Label(triangulo, text="Ingrese la altura del triángulo:", bg="#ffffee", font=("Courier", 10), foreground="#3B3636").pack(pady=10)
+    entrada_baseat.pack(pady=6)
+
+    tk.Label(triangulo, text="Ingrese la altura del triángulo:",
+             bg="#ffffee", font=("Courier", 10), foreground="#3B3636").pack(pady=6)
     global entrada_alturaat
     entrada_alturaat = tk.Entry(triangulo)
-    entrada_alturaat.pack(pady=10)
-    tk.Button(triangulo, text="Calcular", command=ca_triangulo, font=("Verdana", 11), background="#ffffcc").pack(pady=10)
+    entrada_alturaat.pack(pady=6)
+
+    tk.Button(triangulo, text="Calcular", command=ca_triangulo,
+              font=("Verdana", 11), background="#ffffcc").pack(pady=8)
+
     global label_resultado
     label_resultado = tk.Label(triangulo, text="", bg="#ffffee")
-    label_resultado.pack(pady=10)
+    label_resultado.pack(pady=8)
 
 #---------------- FUNCIONES DE VOLUMEN ----------------#
 
