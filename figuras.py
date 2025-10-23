@@ -241,17 +241,20 @@ def ventana_area():
     tk.Button(v, text="Cuadrado", font=("Verdana", 11), background="#ffffcc", command=area_cuadrado).place(x=430, y=110, anchor="ne")
     tk.Button(v, text="Triángulo", font=("Verdana", 11), background="#ffffcc", command=area_triangulo).place(x=428, y=190, anchor="ne")
     tk.Button(v, text="Círculo", font=("Verdana", 11), background="#ffffcc", command=area_circulo).place(x=418, y=270, anchor="ne")
-
 def ventana_volumen():
     v = tk.Toplevel(aplicacion)
     v.configure(background="#ffffee")
     v.geometry("500x350+450+150")
     v.title("Volumen")
-    tk.Label(v, text="Volúmenes", bg="#ffffee", font=("Courier", 24, "bold"), foreground="#3B3636").place(x=50, y=35, anchor='nw')
-    tk.Button(v, text="Cubo", font=("Verdana", 11), background="#ffffcc", command=volumen_cubo).place(x=400, y=110, anchor="ne")
-    tk.Button(v, text="Esfera", font=("Verdana", 11), background="#ffffcc", command=volumen_esfera).place(x=405, y=190, anchor="ne")
-    tk.Button(v, text="Cilindro", font=("Verdana", 11), background="#ffffcc", command=volumen_cilindro).place(x=410, y=270, anchor="ne")
 
+    # Imagen general a la izquierda
+    path_img = os.path.join(os.path.dirname(_file_), "img/hexagonal.png")
+    if os.path.exists(path_img):
+        img = Image.open(path_img).resize((120, 120))  # Ajusta el tamaño según tu preferencia
+        imagen_general = ImageTk.PhotoImage(img)
+        label_imagen = tk.Label(v, image=imagen_general, bg="#ffffee")
+        label_imagen.image = imagen_general  # mantener referencia
+        label_imagen.place(x=20, y=80)  # Ubicación en el lado izquierdo
 #---------------- APLICACIÓN PRINCIPAL ----------------#
 
 aplicacion = tk.Tk()
