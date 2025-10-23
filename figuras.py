@@ -151,7 +151,7 @@ def volumen_cubo():
     label_resultado = tk.Label(cubo, text="", bg="#ffffee")
     label_resultado.pack(pady=10)
 
-    # Imagen debajo
+    # Imagen debajo cubo
     path_img = os.path.join(os.path.dirname(__file__), "img/cubo.png")
     img = Image.open(path_img).resize((80, 80))
     imagen_cubo = ImageTk.PhotoImage(img)
