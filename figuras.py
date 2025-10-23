@@ -134,8 +134,9 @@ def cv_cubo():
 def volumen_cubo():
     cubo = tk.Toplevel(aplicacion)
     cubo.configure(background="#ffffee")
-    cubo.geometry("300x200+450+150")
+    cubo.geometry("300x300+450+150")
     cubo.title("Volumen Cubo")
+
     tk.Label(cubo, text="Ingrese el lado del cubo:", bg="#ffffee", font=("Courier", 10), foreground="#3B3636").pack(pady=10)
     global entrada_ladovc
     entrada_ladovc = tk.Entry(cubo)
@@ -145,6 +146,14 @@ def volumen_cubo():
     label_resultado = tk.Label(cubo, text="", bg="#ffffee")
     label_resultado.pack(pady=10)
 
+    # Imagen debajo
+    path_img = os.path.join(os.path.dirname(__file__), "cubo.png")
+    img = Image.open(path_img).resize((80, 80))
+    imagen_cubo = ImageTk.PhotoImage(img)
+    label_imagen = tk.Label(cubo, image=imagen_cubo, bg="#ffffee")
+    label_imagen.image = imagen_cubo  # mantener referencia
+    label_imagen.pack(pady=5)
+
 def cv_esfera():
     radio = float(entrada_radiove.get())
     volumen = (4 * math.pi * radio**3) / 3
@@ -153,8 +162,9 @@ def cv_esfera():
 def volumen_esfera():
     esfera = tk.Toplevel(aplicacion)
     esfera.configure(background="#ffffee")
-    esfera.geometry("300x200+450+150")
+    esfera.geometry("300x300+450+150")
     esfera.title("Volumen Esfera")
+
     tk.Label(esfera, text="Ingrese el radio de la esfera:", bg="#ffffee", font=("Courier", 10), foreground="#3B3636").pack(pady=10)
     global entrada_radiove
     entrada_radiove = tk.Entry(esfera)
@@ -163,6 +173,14 @@ def volumen_esfera():
     global label_resultado
     label_resultado = tk.Label(esfera, text="", bg="#ffffee")
     label_resultado.pack(pady=10)
+
+    # Imagen debajo
+    path_img = os.path.join(os.path.dirname(__file__), "esfera.png")
+    img = Image.open(path_img).resize((80, 80))
+    imagen_esfera = ImageTk.PhotoImage(img)
+    label_imagen = tk.Label(esfera, image=imagen_esfera, bg="#ffffee")
+    label_imagen.image = imagen_esfera
+    label_imagen.pack(pady=5)
 
 def cv_cilindro():
     radio = float(entrada_radiovci.get())
@@ -173,8 +191,9 @@ def cv_cilindro():
 def volumen_cilindro():
     cilindro = tk.Toplevel(aplicacion)
     cilindro.configure(background="#ffffee")
-    cilindro.geometry("350x265+450+150")
+    cilindro.geometry("350x380+450+150")
     cilindro.title("Volumen Cilindro")
+
     tk.Label(cilindro, text="Ingrese el radio del cilindro:", bg="#ffffee", font=("Courier", 10), foreground="#3B3636").pack(pady=10)
     global entrada_radiovci
     entrada_radiovci = tk.Entry(cilindro)
@@ -187,6 +206,14 @@ def volumen_cilindro():
     global label_resultado
     label_resultado = tk.Label(cilindro, text="", bg="#ffffee")
     label_resultado.pack(pady=10)
+
+    # Imagen debajo
+    path_img = os.path.join(os.path.dirname(__file__), "cilindro.png")
+    img = Image.open(path_img).resize((80, 80))
+    imagen_cilindro = ImageTk.PhotoImage(img)
+    label_imagen = tk.Label(cilindro, image=imagen_cilindro, bg="#ffffee")
+    label_imagen.image = imagen_cilindro
+    label_imagen.pack(pady=5)
 
 #---------------- VENTANAS PRINCIPALES ----------------#
 
