@@ -147,7 +147,7 @@ def volumen_cubo():
     label_resultado.pack(pady=10)
 
     # Imagen debajo
-    path_img = os.path.join(os.path.dirname(__file__), "cubo.png")
+    path_img = os.path.join(os.path.dirname(__file__), "img/cubo.png")
     img = Image.open(path_img).resize((80, 80))
     imagen_cubo = ImageTk.PhotoImage(img)
     label_imagen = tk.Label(cubo, image=imagen_cubo, bg="#ffffee")
@@ -175,7 +175,7 @@ def volumen_esfera():
     label_resultado.pack(pady=10)
 
     # Imagen debajo
-    path_img = os.path.join(os.path.dirname(__file__), "esfera.png")
+    path_img = os.path.join(os.path.dirname(__file__), "img/esfera.png")
     img = Image.open(path_img).resize((80, 80))
     imagen_esfera = ImageTk.PhotoImage(img)
     label_imagen = tk.Label(esfera, image=imagen_esfera, bg="#ffffee")
@@ -208,7 +208,7 @@ def volumen_cilindro():
     label_resultado.pack(pady=10)
 
     # Imagen debajo
-    path_img = os.path.join(os.path.dirname(__file__), "cilindro.png")
+    path_img = os.path.join(os.path.dirname(__file__), "img/cilindro.png")
     img = Image.open(path_img).resize((80, 80))
     imagen_cilindro = ImageTk.PhotoImage(img)
     label_imagen = tk.Label(cilindro, image=imagen_cilindro, bg="#ffffee")
