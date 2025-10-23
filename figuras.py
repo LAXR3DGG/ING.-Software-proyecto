@@ -1,6 +1,9 @@
 import tkinter as tk
 import math
 
+
+
+
 #---------------- FUNCIONES DE PERÍMETRO ----------------#
 
 def cp_cuadrado():
@@ -86,12 +89,26 @@ def ca_circulo():
     area = math.pi * radio**2
     label_resultado.config(text=f"El área es: {area} u²", font=("Courier", 10), background="#ffffcc")
 
+# Quita: from PIL import Image, ImageTk
+
 def area_circulo():
     circulo = tk.Toplevel(aplicacion)
     circulo.configure(background="#ffffee")
-    circulo.geometry("300x200+450+150")
+    circulo.geometry("340x360+450+150")
     circulo.title("Área Círculo")
-    tk.Label(circulo, text="Ingrese el radio del círculo:", bg="#ffffee", font=("Courier", 10), foreground="#3B3636").pack(pady=10)
+
+    tk.Label(circulo, text="Ingrese el radio del círculo:",
+             bg="#ffffee", font=("Courier", 10), foreground="#3B3636").pack(pady=(10,4))
+
+    # Imagen PNG/GIF con Tkinter (sin Pillow)
+    photo = tk.PhotoImage(file="img/circulo.png").subsample(2, 2)  # ajusta tamaño
+    img_label = tk.Label(circulo, image=photo, bg="#ffffee")
+    img_label.image = photo  # mantener referencia
+    img_label.pack(pady=(0,6))
+
+    ...
+
+    
     global entrada_radioaci
     entrada_radioaci = tk.Entry(circulo)
     entrada_radioaci.pack(pady=10)
