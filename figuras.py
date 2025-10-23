@@ -1,5 +1,6 @@
 import tkinter as tk
 import math
+from PIL import Image, ImageTk
 
 #---------------- FUNCIONES DE PERÍMETRO ----------------#
 
@@ -11,7 +12,7 @@ def cp_cuadrado():
 def perimetro_cuadrado():
     cuadrado = tk.Toplevel(aplicacion)
     cuadrado.configure(background="#ffffee")
-    cuadrado.geometry("300x200+450+150")
+    cuadrado.geometry("500x350+450+150")
     cuadrado.title("Perímetro Cuadrado")
     tk.Label(cuadrado, text="Ingrese el lado del cuadrado:", bg="#ffffee", font=("Courier", 10), foreground="#3B3636").pack(pady=10)
     global entrada_ladopc
@@ -19,6 +20,15 @@ def perimetro_cuadrado():
     entrada_ladopc.pack(pady=10)
     tk.Button(cuadrado, text="Calcular", command=cp_cuadrado, font=("Verdana", 11), background="#ffffcc").pack(pady=10)
     global label_resultado
+
+    img = Image.open("img/square_perimeter.png")
+    img = img.resize((130, 130), Image.Resampling.LANCZOS)
+    tk_image = ImageTk.PhotoImage(img)
+    parent_bg = cuadrado.cget("background")
+    image_label = tk.Label(cuadrado, image=tk_image, bg=parent_bg)
+    image_label.pack(pady=10)
+    image_label.image = tk_image
+
     label_resultado = tk.Label(cuadrado, text="", bg="#ffffee")
     label_resultado.pack(pady=10)
 
