@@ -1,4 +1,4 @@
-import tkinter as tk
+﻿import tkinter as tk
 import math
 
 #---------------- FUNCIONES DE PERÍMETRO ----------------#
@@ -62,16 +62,12 @@ def perimetro_triangulo():
 
 #---------------- FUNCIONES DE ÁREA ----------------#
 
-def ca_cuadrado():
-    lado = float(entrada_ladoac.get())
-    area = lado * lado
-    label_resultado.config(text=f"El área es: {area} u²", font=("Courier", 11), background="#ffffcc")
-
 def area_cuadrado():
     cuadrado = tk.Toplevel(aplicacion)
     cuadrado.configure(background="#ffffee")
-    cuadrado.geometry("300x200+450+150")
+    cuadrado.geometry("300x300+450+150")
     cuadrado.title("Área Cuadrado")
+
     tk.Label(cuadrado, text="Ingrese el lado del cuadrado:", bg="#ffffee", font=("Courier", 10), foreground="#3B3636").pack(pady=10)
     global entrada_ladoac
     entrada_ladoac = tk.Entry(cuadrado)
@@ -80,6 +76,15 @@ def area_cuadrado():
     global label_resultado
     label_resultado = tk.Label(cuadrado, text="", bg="#ffffee")
     label_resultado.pack(pady=10)
+
+    # Imagen del cuadrado debajo
+    path_img = os.path.join(os.path.dirname(_file_), "cuadrado.png")
+    if os.path.exists(path_img):
+        img = Image.open(path_img).resize((80, 80))
+        imagen_cuadrado = ImageTk.PhotoImage(img)
+        label_imagen = tk.Label(cuadrado, image=imagen_cuadrado, bg="#ffffee")
+        label_imagen.image = imagen_cuadrado  # mantener referencia
+        label_imagen.pack(pady=5)
 
 def ca_circulo():
     radio = float(entrada_radioaci.get())
