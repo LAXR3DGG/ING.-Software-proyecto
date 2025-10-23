@@ -1,5 +1,6 @@
 import tkinter as tk
 import math
+import os, sys  # para ruta robusta a la imagen
 
 #---------------- FUNCIONES DE PERÍMETRO ----------------#
 
@@ -183,7 +184,7 @@ def volumen_cilindro():
     global entrada_alturavci
     entrada_alturavci = tk.Entry(cilindro)
     entrada_alturavci.pack(pady=10)
-    tk.Button(cilindro, text="Calcular", command=cv_cilindro, font=("Verdana", 11), background="#ffffcc").pack(pady=10)
+    tk.Button(cilindro, text="Calcular", command=volumen_cilindro, font=("Verdana", 11), background="#ffffcc").pack(pady=10)
     global label_resultado
     label_resultado = tk.Label(cilindro, text="", bg="#ffffee")
     label_resultado.pack(pady=10)
@@ -228,6 +229,26 @@ aplicacion.configure(background="#ffffee")
 aplicacion.title("Perímetro, área y volumen")
 
 tk.Label(aplicacion, text="Calculadora", bg="#ffffee", font=("Courier", 24, "bold"), foreground="#3B3636").place(x=50, y=35, anchor='nw')
+
+# --- IMAGEN PRINCIPAL: img/calculation.png ---
+BASE_DIR = getattr(sys, "_MEIPASS", os.path.dirname(os.path.abspath(__file__)))
+IMG_PATH = os.path.join(BASE_DIR, "img", "bimo.png")  # <-- tu archivo PNG
+
+try:
+    foto_principal = tk.PhotoImage(file=IMG_PATH)
+    # Reducir si es muy grande (aprox. máx 200x200)
+    max_w, max_h = 200, 200
+    w, h = foto_principal.width(), foto_principal.height()
+    if w > max_w or h > max_h:
+        factor = max(1, math.ceil(max(w / max_w, h / max_h)))
+        foto_principal = foto_principal.subsample(factor, factor)
+
+    aplicacion.foto_principal = foto_principal  # mantener referencia
+    tk.Label(aplicacion, image=foto_principal, bg="#ffffee").place(x=50, y=90, anchor="nw")
+except Exception as e:
+    tk.Label(aplicacion, text="(No se pudo cargar imagen)", bg="#ffffee", fg="#aa0000").place(x=50, y=90, anchor="nw")
+
+# Botones principales
 tk.Button(aplicacion, text="Perímetro", font=("Verdana", 11), background="#ffffcc", command=ventana_perimetro).place(x=430, y=110, anchor="ne")
 tk.Button(aplicacion, text="Volumen", font=("Verdana", 11), background="#ffffcc", command=ventana_volumen).place(x=425, y=190, anchor="ne")
 tk.Button(aplicacion, text="Área", font=("Verdana", 11), background="#ffffcc", command=ventana_area).place(x=410, y=270, anchor="ne")
