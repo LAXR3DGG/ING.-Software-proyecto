@@ -1,5 +1,6 @@
 import tkinter as tk
 import math
+from tkinter import PhotoImage
 
 #---------------- FUNCIONES DE PERÍMETRO ----------------#
 
@@ -30,7 +31,7 @@ def cp_circulo():
 def perimetro_circulo():
     circulo = tk.Toplevel(aplicacion)
     circulo.configure(background="#ffffee")
-    circulo.geometry("300x200+450+150")
+    circulo.geometry("400x390+450+150")
     circulo.title("Perímetro Círculo")
     tk.Label(circulo, text="Ingrese el radio del círculo:", bg="#ffffee", font=("Courier", 10), foreground="#3B3636").pack(pady=10)
     global entrada_radiopci
@@ -40,6 +41,12 @@ def perimetro_circulo():
     global label_resultado
     label_resultado = tk.Label(circulo, text="", bg="#ffffee")
     label_resultado.pack(pady=10)
+
+    #-------------Imagen agregada por Christian Aviles -------------
+    global img_circulo
+    img_circulo = PhotoImage(file="img/Circulo.png")
+    img_circulo = img_circulo.subsample(3, 3) 
+    tk.Label(circulo, image=img_circulo, bg="#ffffee").pack(pady=10)
 
 def cp_triangulo():
     lado = float(entrada_ladopt.get())
