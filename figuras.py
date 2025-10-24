@@ -2,7 +2,7 @@
 import os
 import tkinter as tk
 import math
-from PIL import Image, ImageTk
+from tkinter import PhotoImage
 
 #---------------- FUNCIONES DE PERÍMETRO ----------------#
 
@@ -48,7 +48,7 @@ def cp_circulo():
 def perimetro_circulo():
     circulo = tk.Toplevel(aplicacion)
     circulo.configure(background="#ffffee")
-    circulo.geometry("300x200+450+150")
+    circulo.geometry("400x390+450+150")
     circulo.title("Perímetro Círculo")
     tk.Label(circulo, text="Ingrese el radio del círculo:", bg="#ffffee", font=("Courier", 10), foreground="#3B3636").pack(pady=10)
     global entrada_radiopci
@@ -58,6 +58,12 @@ def perimetro_circulo():
     global label_resultado
     label_resultado = tk.Label(circulo, text="", bg="#ffffee")
     label_resultado.pack(pady=10)
+
+    #-------------Imagen agregada por Raul Contreras -------------
+    global img_circulo
+    img_circulo = PhotoImage(file="img/Circulo.png")
+    img_circulo = img_circulo.subsample(3, 3) 
+    tk.Label(circulo, image=img_circulo, bg="#ffffee").pack(pady=10)
 
 def cp_triangulo():
     try:
@@ -286,14 +292,21 @@ def ventana_perimetro():
     tk.Button(v, text="Triángulo Equilátero", font=("Verdana", 11), background="#ffffcc", command=perimetro_triangulo).place(x=465, y=270, anchor="ne")
 
 def ventana_area():
+   
+
     v = tk.Toplevel(aplicacion)
     v.configure(background="#ffffee")
     v.geometry("500x350+450+150")
     v.title("Área")
     tk.Label(v, text="Áreas", bg="#ffffee", font=("Courier", 24, "bold"), foreground="#3B3636").place(x=50, y=35, anchor='nw')
+    global area
+    area = PhotoImage(file="img/area.png")  
+    area = area.subsample(3, 3)  
+    tk.Label(v, image=area, bg="#ffffee").place(x=50, y=120)
     tk.Button(v, text="Cuadrado", font=("Verdana", 11), background="#ffffcc", command=area_cuadrado).place(x=430, y=110, anchor="ne")
     tk.Button(v, text="Triángulo", font=("Verdana", 11), background="#ffffcc", command=area_triangulo).place(x=428, y=190, anchor="ne")
     tk.Button(v, text="Círculo", font=("Verdana", 11), background="#ffffcc", command=area_circulo).place(x=418, y=270, anchor="ne")
+
 
 def ventana_volumen():
     v = tk.Toplevel(aplicacion)
