@@ -69,6 +69,15 @@ def perimetro_triangulo():
     global label_resultado
     label_resultado = tk.Label(triangulo, text="", bg="#ffffee")
     label_resultado.pack(pady=10)
+    img = Image.open("img/tri_perimeter.png")
+    img = img.resize((130, 130), Image.Resampling.LANCZOS)
+    tk_image = ImageTk.PhotoImage(img)
+    parent_bg = triangulo.cget("background")
+    image_label = tk.Label(triangulo, image=tk_image, bg=parent_bg)
+    image_label.pack(pady=10)
+    image_label.image = tk_image
+    label_resultado = tk.Label(triangulo, text="", bg="#ffffee")
+    label_resultado.pack(pady=10)
 
 #---------------- FUNCIONES DE ÁREA ----------------#
 
