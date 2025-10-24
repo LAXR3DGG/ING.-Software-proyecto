@@ -1,3 +1,5 @@
+﻿from PIL import Image, ImageTk
+import os
 import tkinter as tk
 import math
 from tkinter import PhotoImage
@@ -5,14 +7,17 @@ from tkinter import PhotoImage
 #---------------- FUNCIONES DE PERÍMETRO ----------------#
 
 def cp_cuadrado():
-    lado = float(entrada_ladopc.get())
-    perimetro = 4 * lado
-    label_resultado.config(text=f"El perímetro es: {perimetro} u", font=("Courier", 11), background="#ffffcc")
+    try:
+        lado = float(entrada_ladopc.get())
+        perimetro = 4 * lado
+        label_resultado.config(text=f"El perímetro es: {perimetro} u", font=("Courier", 11), background="#ffffcc")
+    except ValueError:
+        label_resultado.config(text="Ingrese un número válido", bg="#ffcccc")
 
 def perimetro_cuadrado():
     cuadrado = tk.Toplevel(aplicacion)
     cuadrado.configure(background="#ffffee")
-    cuadrado.geometry("300x200+450+150")
+    cuadrado.geometry("500x350+450+150")
     cuadrado.title("Perímetro Cuadrado")
     tk.Label(cuadrado, text="Ingrese el lado del cuadrado:", bg="#ffffee", font=("Courier", 10), foreground="#3B3636").pack(pady=10)
     global entrada_ladopc
@@ -20,13 +25,25 @@ def perimetro_cuadrado():
     entrada_ladopc.pack(pady=10)
     tk.Button(cuadrado, text="Calcular", command=cp_cuadrado, font=("Verdana", 11), background="#ffffcc").pack(pady=10)
     global label_resultado
+
+    img = Image.open("img/square_perimeter.png")
+    img = img.resize((130, 130), Image.Resampling.LANCZOS)
+    tk_image = ImageTk.PhotoImage(img)
+    parent_bg = cuadrado.cget("background")
+    image_label = tk.Label(cuadrado, image=tk_image, bg=parent_bg)
+    image_label.pack(pady=10)
+    image_label.image = tk_image
+
     label_resultado = tk.Label(cuadrado, text="", bg="#ffffee")
     label_resultado.pack(pady=10)
 
 def cp_circulo():
-    radio = float(entrada_radiopci.get())
-    perimetro = 2 * math.pi * radio
-    label_resultado.config(text=f"El perímetro es: {perimetro} u", font=("Courier", 10), background="#ffffcc")
+    try:
+        radio = float(entrada_radiopci.get())
+        perimetro = 2 * math.pi * radio
+        label_resultado.config(text=f"El perímetro es: {perimetro:.2f} u", font=("Courier", 10), background="#ffffcc")
+    except ValueError:
+        label_resultado.config(text="Ingrese un número válido", bg="#ffcccc")
 
 def perimetro_circulo():
     circulo = tk.Toplevel(aplicacion)
@@ -49,9 +66,12 @@ def perimetro_circulo():
     tk.Label(circulo, image=img_circulo, bg="#ffffee").pack(pady=10)
 
 def cp_triangulo():
-    lado = float(entrada_ladopt.get())
-    perimetro = lado * 3
-    label_resultado.config(text=f"El perímetro es: {perimetro} u", font=("Courier", 11), background="#ffffcc")
+    try:
+        lado = float(entrada_ladopt.get())
+        perimetro = lado * 3
+        label_resultado.config(text=f"El perímetro es: {perimetro} u", font=("Courier", 11), background="#ffffcc")
+    except ValueError:
+        label_resultado.config(text="Ingrese un número válido", bg="#ffcccc")
 
 def perimetro_triangulo():
     triangulo = tk.Toplevel(aplicacion)
@@ -66,19 +86,32 @@ def perimetro_triangulo():
     global label_resultado
     label_resultado = tk.Label(triangulo, text="", bg="#ffffee")
     label_resultado.pack(pady=10)
+    img = Image.open("img/tri_perimeter.png")
+    img = img.resize((130, 130), Image.Resampling.LANCZOS)
+    tk_image = ImageTk.PhotoImage(img)
+    parent_bg = triangulo.cget("background")
+    image_label = tk.Label(triangulo, image=tk_image, bg=parent_bg)
+    image_label.pack(pady=10)
+    image_label.image = tk_image
+    label_resultado = tk.Label(triangulo, text="", bg="#ffffee")
+    label_resultado.pack(pady=10)
 
 #---------------- FUNCIONES DE ÁREA ----------------#
 
 def ca_cuadrado():
-    lado = float(entrada_ladoac.get())
-    area = lado * lado
-    label_resultado.config(text=f"El área es: {area} u²", font=("Courier", 11), background="#ffffcc")
+    try:
+        lado = float(entrada_ladoac.get())
+        area = lado ** 2
+        label_resultado.config(text=f"El área es: {area} u²", font=("Courier", 11), background="#ffffcc")
+    except ValueError:
+        label_resultado.config(text="Ingrese un número válido", bg="#ffcccc")
 
 def area_cuadrado():
     cuadrado = tk.Toplevel(aplicacion)
     cuadrado.configure(background="#ffffee")
-    cuadrado.geometry("300x200+450+150")
+    cuadrado.geometry("300x300+450+150")
     cuadrado.title("Área Cuadrado")
+
     tk.Label(cuadrado, text="Ingrese el lado del cuadrado:", bg="#ffffee", font=("Courier", 10), foreground="#3B3636").pack(pady=10)
     global entrada_ladoac
     entrada_ladoac = tk.Entry(cuadrado)
@@ -88,10 +121,22 @@ def area_cuadrado():
     label_resultado = tk.Label(cuadrado, text="", bg="#ffffee")
     label_resultado.pack(pady=10)
 
+    # Imagen del cuadrado debajo
+    path_img = os.path.join(os.path.dirname(__file__), "img/cuadrado.png")
+    if os.path.exists(path_img):
+        img = Image.open(path_img).resize((80, 80))
+        imagen_cuadrado = ImageTk.PhotoImage(img)
+        label_imagen = tk.Label(cuadrado, image=imagen_cuadrado, bg="#ffffee")
+        label_imagen.image = imagen_cuadrado
+        label_imagen.pack(pady=5)
+
 def ca_circulo():
-    radio = float(entrada_radioaci.get())
-    area = math.pi * radio**2
-    label_resultado.config(text=f"El área es: {area} u²", font=("Courier", 10), background="#ffffcc")
+    try:
+        radio = float(entrada_radioaci.get())
+        area = math.pi * radio**2
+        label_resultado.config(text=f"El área es: {area:.2f} u²", font=("Courier", 10), background="#ffffcc")
+    except ValueError:
+        label_resultado.config(text="Ingrese un número válido", bg="#ffcccc")
 
 def area_circulo():
     circulo = tk.Toplevel(aplicacion)
@@ -108,10 +153,13 @@ def area_circulo():
     label_resultado.pack(pady=10)
 
 def ca_triangulo():
-    base = float(entrada_baseat.get())
-    altura = float(entrada_alturaat.get())
-    area = (base * altura) / 2
-    label_resultado.config(text=f"El área es: {area} u²", font=("Courier", 11), background="#ffffcc")
+    try:
+        base = float(entrada_baseat.get())
+        altura = float(entrada_alturaat.get())
+        area = (base * altura) / 2
+        label_resultado.config(text=f"El área es: {area} u²", font=("Courier", 11), background="#ffffcc")
+    except ValueError:
+        label_resultado.config(text="Ingrese valores válidos", bg="#ffcccc")
 
 def area_triangulo():
     triangulo = tk.Toplevel(aplicacion)
@@ -134,15 +182,19 @@ def area_triangulo():
 #---------------- FUNCIONES DE VOLUMEN ----------------#
 
 def cv_cubo():
-    lado = float(entrada_ladovc.get())
-    volumen = lado ** 3
-    label_resultado.config(text=f"El volumen es: {volumen} u³", font=("Courier", 11), background="#ffffcc")
+    try:
+        lado = float(entrada_ladovc.get())
+        volumen = lado ** 3
+        label_resultado.config(text=f"El volumen es: {volumen} u³", font=("Courier", 11), background="#ffffcc")
+    except ValueError:
+        label_resultado.config(text="Ingrese un número válido", bg="#ffcccc")
 
 def volumen_cubo():
     cubo = tk.Toplevel(aplicacion)
     cubo.configure(background="#ffffee")
-    cubo.geometry("300x200+450+150")
+    cubo.geometry("300x300+450+150")
     cubo.title("Volumen Cubo")
+
     tk.Label(cubo, text="Ingrese el lado del cubo:", bg="#ffffee", font=("Courier", 10), foreground="#3B3636").pack(pady=10)
     global entrada_ladovc
     entrada_ladovc = tk.Entry(cubo)
@@ -152,16 +204,28 @@ def volumen_cubo():
     label_resultado = tk.Label(cubo, text="", bg="#ffffee")
     label_resultado.pack(pady=10)
 
+    path_img = os.path.join(os.path.dirname(__file__), "img/cubo.png")
+    if os.path.exists(path_img):
+        img = Image.open(path_img).resize((80, 80))
+        imagen_cubo = ImageTk.PhotoImage(img)
+        label_imagen = tk.Label(cubo, image=imagen_cubo, bg="#ffffee")
+        label_imagen.image = imagen_cubo
+        label_imagen.pack(pady=5)
+
 def cv_esfera():
-    radio = float(entrada_radiove.get())
-    volumen = (4 * math.pi * radio**3) / 3
-    label_resultado.config(text=f"El volumen es: {volumen} u³", font=("Courier", 10), background="#ffffcc")
+    try:
+        radio = float(entrada_radiove.get())
+        volumen = (4 * math.pi * radio**3) / 3
+        label_resultado.config(text=f"El volumen es: {volumen:.2f} u³", font=("Courier", 10), background="#ffffcc")
+    except ValueError:
+        label_resultado.config(text="Ingrese un número válido", bg="#ffcccc")
 
 def volumen_esfera():
     esfera = tk.Toplevel(aplicacion)
     esfera.configure(background="#ffffee")
-    esfera.geometry("300x200+450+150")
+    esfera.geometry("300x300+450+150")
     esfera.title("Volumen Esfera")
+
     tk.Label(esfera, text="Ingrese el radio de la esfera:", bg="#ffffee", font=("Courier", 10), foreground="#3B3636").pack(pady=10)
     global entrada_radiove
     entrada_radiove = tk.Entry(esfera)
@@ -171,17 +235,29 @@ def volumen_esfera():
     label_resultado = tk.Label(esfera, text="", bg="#ffffee")
     label_resultado.pack(pady=10)
 
+    path_img = os.path.join(os.path.dirname(__file__), "img/esfera.png")
+    if os.path.exists(path_img):
+        img = Image.open(path_img).resize((80, 80))
+        imagen_esfera = ImageTk.PhotoImage(img)
+        label_imagen = tk.Label(esfera, image=imagen_esfera, bg="#ffffee")
+        label_imagen.image = imagen_esfera
+        label_imagen.pack(pady=5)
+
 def cv_cilindro():
-    radio = float(entrada_radiovci.get())
-    altura = float(entrada_alturavci.get())
-    volumen = (math.pi * radio**2) * altura
-    label_resultado.config(text=f"El volumen es: {volumen} u³", font=("Courier", 11), background="#ffffcc")
+    try:
+        radio = float(entrada_radiovci.get())
+        altura = float(entrada_alturavci.get())
+        volumen = (math.pi * radio**2) * altura
+        label_resultado.config(text=f"El volumen es: {volumen:.2f} u³", font=("Courier", 11), background="#ffffcc")
+    except ValueError:
+        label_resultado.config(text="Ingrese valores válidos", bg="#ffcccc")
 
 def volumen_cilindro():
     cilindro = tk.Toplevel(aplicacion)
     cilindro.configure(background="#ffffee")
-    cilindro.geometry("350x265+450+150")
+    cilindro.geometry("350x380+450+150")
     cilindro.title("Volumen Cilindro")
+
     tk.Label(cilindro, text="Ingrese el radio del cilindro:", bg="#ffffee", font=("Courier", 10), foreground="#3B3636").pack(pady=10)
     global entrada_radiovci
     entrada_radiovci = tk.Entry(cilindro)
@@ -194,6 +270,14 @@ def volumen_cilindro():
     global label_resultado
     label_resultado = tk.Label(cilindro, text="", bg="#ffffee")
     label_resultado.pack(pady=10)
+
+    path_img = os.path.join(os.path.dirname(__file__), "img/cilindro.png")
+    if os.path.exists(path_img):
+        img = Image.open(path_img).resize((80, 80))
+        imagen_cilindro = ImageTk.PhotoImage(img)
+        label_imagen = tk.Label(cilindro, image=imagen_cilindro, bg="#ffffee")
+        label_imagen.image = imagen_cilindro
+        label_imagen.pack(pady=5)
 
 #---------------- VENTANAS PRINCIPALES ----------------#
 
@@ -229,10 +313,20 @@ def ventana_volumen():
     v.configure(background="#ffffee")
     v.geometry("500x350+450+150")
     v.title("Volumen")
+
     tk.Label(v, text="Volúmenes", bg="#ffffee", font=("Courier", 24, "bold"), foreground="#3B3636").place(x=50, y=35, anchor='nw')
-    tk.Button(v, text="Cubo", font=("Verdana", 11), background="#ffffcc", command=volumen_cubo).place(x=400, y=110, anchor="ne")
-    tk.Button(v, text="Esfera", font=("Verdana", 11), background="#ffffcc", command=volumen_esfera).place(x=405, y=190, anchor="ne")
-    tk.Button(v, text="Cilindro", font=("Verdana", 11), background="#ffffcc", command=volumen_cilindro).place(x=410, y=270, anchor="ne")
+
+    path_img = os.path.join(os.path.dirname(__file__), "img/hexagonal.png")
+    if os.path.exists(path_img):
+        img = Image.open(path_img).resize((120, 120))
+        imagen_general = ImageTk.PhotoImage(img)
+        label_imagen = tk.Label(v, image=imagen_general, bg="#ffffee")
+        label_imagen.image = imagen_general
+        label_imagen.place(x=20, y=80)
+
+    tk.Button(v, text="Cubo", font=("Verdana", 11), background="#ffffcc", command=volumen_cubo).place(x=430, y=110, anchor="ne")
+    tk.Button(v, text="Esfera", font=("Verdana", 11), background="#ffffcc", command=volumen_esfera).place(x=425, y=190, anchor="ne")
+    tk.Button(v, text="Cilindro", font=("Verdana", 11), background="#ffffcc", command=volumen_cilindro).place(x=428, y=270, anchor="ne")
 
 #---------------- APLICACIÓN PRINCIPAL ----------------#
 
@@ -245,5 +339,4 @@ tk.Label(aplicacion, text="Calculadora", bg="#ffffee", font=("Courier", 24, "bol
 tk.Button(aplicacion, text="Perímetro", font=("Verdana", 11), background="#ffffcc", command=ventana_perimetro).place(x=430, y=110, anchor="ne")
 tk.Button(aplicacion, text="Volumen", font=("Verdana", 11), background="#ffffcc", command=ventana_volumen).place(x=425, y=190, anchor="ne")
 tk.Button(aplicacion, text="Área", font=("Verdana", 11), background="#ffffcc", command=ventana_area).place(x=410, y=270, anchor="ne")
-
 aplicacion.mainloop()
